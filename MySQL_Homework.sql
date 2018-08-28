@@ -116,24 +116,24 @@ JOIN city c USING(city_id)
 JOIN country co USING(country_id);
 -- 7h. List the top five genres in gross revenue in descending order.
 SELECT c.name, SUM(p.amount) AS 'total'
-FROM category c 
-JOIN film_category USING(category_id) 
-JOIN inventory USING(film_id) 
-JOIN rental USING(inventory_id) 
-JOIN payment p USING(customer_id) 
+FROM payment p 
+JOIN rental USING(rental_id) 
+JOIN inventory USING(inventory_id) 
+JOIN film_category USING(film_id) 
+JOIN category c USING(category_id) 
 GROUP BY(name) 
-ORDER BY (total) DESC 
+ORDER BY(total) DESC 
 LIMIT 5;
 -- 8a. In your new role as an executive, you would like to have an easy way of viewing the Top five genres by gross revenue. Use the solution from the problem above to create a view. 
 CREATE OR REPLACE VIEW top_five AS 
 SELECT c.name, SUM(p.amount) AS 'total'
-FROM category c 
-JOIN film_category USING(category_id) 
-JOIN inventory USING(film_id) 
-JOIN rental USING(inventory_id) 
-JOIN payment p USING(customer_id) 
+FROM payment p 
+JOIN rental USING(rental_id) 
+JOIN inventory USING(inventory_id) 
+JOIN film_category USING(film_id) 
+JOIN category c USING(category_id) 
 GROUP BY(name) 
-ORDER BY (total) DESC 
+ORDER BY(total) DESC 
 LIMIT 5;
 -- 8b. How would you display the view that you created in 8a?
 SELECT * FROM top_five;
